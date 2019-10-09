@@ -4,14 +4,15 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 It's necessary update Config/firebaseConfig file. Info is provided by firebase console
 
-  var firebaseConfig = {
-    apiKey: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    authDomain: "xxxxxxxxxxxxxxxxxxxxxxxxx",
-    databaseURL: "xxxxxxxxxxxxxxxxxxxxxxxxx",
-    projectId: "xxxxxxxxxxxxxxxx",
-    storageBucket: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    messagingSenderId: "xxxxxxxxxxxxxxxxx",
-    appId: "xxxxxxxxxxxxxxxxx"
+var firebaseConfig = {
+apiKey: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+authDomain: "xxxxxxxxxxxxxxxxxxxxxxxxx",
+databaseURL: "xxxxxxxxxxxxxxxxxxxxxxxxx",
+projectId: "xxxxxxxxxxxxxxxx",
+storageBucket: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+messagingSenderId: "xxxxxxxxxxxxxxxxx",
+appId: "xxxxxxxxxxxxxxxxx" 
+}
 
 ## Available Scripts
 
