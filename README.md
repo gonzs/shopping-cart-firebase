@@ -1,5 +1,18 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Initial Configuration
+
+It's necessary update Config/firebaseConfig file. Info is provided by firebase console
+
+  var firebaseConfig = {
+    apiKey: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    authDomain: "xxxxxxxxxxxxxxxxxxxxxxxxx",
+    databaseURL: "xxxxxxxxxxxxxxxxxxxxxxxxx",
+    projectId: "xxxxxxxxxxxxxxxx",
+    storageBucket: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    messagingSenderId: "xxxxxxxxxxxxxxxxx",
+    appId: "xxxxxxxxxxxxxxxxx"
+
 ## Available Scripts
 
 In the project directory, you can run:
