@@ -1,9 +1,10 @@
-import * as firebase from "firebase/app";
-import "firebase/firestore";
+import * as firebase from 'firebase/app';
+import 'firebase/firestore';
 import { Products } from '../Data/data';
-import firebaseConfig from "../Config/firebaseConfig";
+import { firebaseConfig } from './firebaseConfig';
 
 /* Initialize Firebase */
+
 const Firebase = firebase.initializeApp(firebaseConfig);
 
 /* Initialize DB */
@@ -12,15 +13,15 @@ export const db = Firebase.firestore();
 /* Load products from data file */
 export const setAllProducts = db => {
   Products.map((prod, index) => {
-    db.collection("products")
+    db.collection('products')
       .doc(prod.id)
       .set({
         name: prod.name,
         price: prod.price,
         stock: prod.stock
       })
-      .then(() => console.log("Document successfully written!"))
-      .catch(error => console.error("Error writing document: ", error));
+      .then(() => console.log('Document successfully written!'))
+      .catch(error => console.error('Error writing document: ', error));
     return true;
   });
 };
@@ -31,7 +32,7 @@ export const getAllProducts = db => {
     let products = [];
     resolve(
       db
-        .collection("products")
+        .collection('products')
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach(doc => {
@@ -46,7 +47,7 @@ export const getAllProducts = db => {
           });
           return products;
         })
-        .catch(error => console.error("Error getting documents", error))
+        .catch(error => console.error('Error getting documents', error))
     );
   });
 };

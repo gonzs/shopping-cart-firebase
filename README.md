@@ -2,17 +2,15 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Initial Configuration
 
-It's necessary update Config/firebaseConfig file. Info is provided by firebase console
+It's necessary create Config/config file with the following constants. Info is provided by firebase console
 
-var firebaseConfig = {
-apiKey: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-authDomain: "xxxxxxxxxxxxxxxxxxxxxxxxx",
-databaseURL: "xxxxxxxxxxxxxxxxxxxxxxxxx",
-projectId: "xxxxxxxxxxxxxxxx",
-storageBucket: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-messagingSenderId: "xxxxxxxxxxxxxxxxx",
-appId: "xxxxxxxxxxxxxxxxx" 
-}
+API_KEY = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+AUTH_DOMAIN = 'xxxxxxxxxxxxxxxxxxxxxxxxxxx';
+DATABASE_URL = 'xxxxxxxxxxxxxxxxxxxxxxxxx';
+PROJECT_ID = 'xxxxxxxxxxxxxxxxxx';
+STORAGE_BUCKET = 'xxxxxxxxxxxxxxxxx';
+MESSAGING_SENDER_ID = 'xxxxxxxxxxxxxxxxxxxx';
+APP_ID = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 
 ## Available Scripts
 
