@@ -26,6 +26,17 @@ export const setAllProducts = db => {
   });
 };
 
+/* Update products */
+export const updateProduct = (db, item) => {
+  db.collection('products')
+    .doc(item.id)
+    .update({
+      stock: item.stock
+    })
+    .then(() => console.log('Document successfully written!'))
+    .catch(error => console.error('Error writing document: ', error));
+};
+
 /* Read All documents from Products Collection */
 export const getAllProducts = db => {
   return new Promise((resolve, reject) => {

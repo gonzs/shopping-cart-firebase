@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { db, getAllProducts, setAllProducts } from '../Firebase';
-import ShopContext from "./ShopContext";
+import React, { Component } from 'react';
+import { db, getAllProducts, setAllProducts, updateProduct } from '../Firebase';
+import ShopContext from './ShopContext';
 
 class GlobalState extends Component {
   state = {
@@ -89,10 +89,17 @@ class GlobalState extends Component {
   };
 
   buyCart = () => {
-    if (this.state.cart.length !== 0)
+    const cart = this.state.cart;
+    const products = this.state.products;
+
+    if (cart.length !== 0)
       setTimeout(() => {
+        products.forEach(item => {
+          updateProduct(db, item);
+        });
+
         this.setState({ cart: [] });
-        alert("Cart Ordered!!!");
+        alert('Cart Ordered!!!');
       }, 1000);
   };
 
