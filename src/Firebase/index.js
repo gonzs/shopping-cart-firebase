@@ -1,6 +1,6 @@
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
-import { Products } from '../Data/data';
+import { Products } from '../Config/data';
 import { firebaseConfig } from './firebaseConfig';
 
 /* Initialize Firebase */

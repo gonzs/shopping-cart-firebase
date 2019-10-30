@@ -5,7 +5,9 @@ import ShopContext from './ShopContext';
 class GlobalState extends Component {
   state = {
     products: [],
-    cart: []
+    cart: [],
+    logged: false,
+    user: ''
   };
 
   componentDidMount() {
@@ -103,15 +105,27 @@ class GlobalState extends Component {
       }, 1000);
   };
 
+  logIn = () => {
+    this.setState({ logged: true, user: 'Gonzalo' });
+  };
+
+  logOut = () => {
+    this.setState({ logged: false, user: '' });
+  };
+
   render() {
     return (
       <ShopContext.Provider
         value={{
           products: this.state.products,
           cart: this.state.cart,
+          logged: this.state.logged,
+          user: this.state.user,
           addProductToCart: this.addProductToCart,
           deleteProductFromCart: this.deleteProductFromCart,
-          buyCart: this.buyCart
+          buyCart: this.buyCart,
+          logIn: this.logIn,
+          logOut: this.logOut
         }}
       >
         {this.props.children}
