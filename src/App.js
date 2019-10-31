@@ -9,11 +9,13 @@ import {
   CHECKOUT,
   SIGN_IN,
   SIGN_UP,
-  SIGN_OUT
+  SIGN_OUT,
+  SUCCESS_SIGN_UP
 } from './Config/routes';
 import SignIn from './LogUser/SignIn';
 import SignUp from './LogUser/SignUp';
 import SignOut from './LogUser/SignOut';
+import SuccessSignUp from './LogUser/SuccessSignUp';
 
 class App extends Component {
   render() {
@@ -27,6 +29,7 @@ class App extends Component {
             <Route path={SIGN_IN} component={SignIn} />
             <Route path={SIGN_UP} component={SignUp} />
             <Route path={SIGN_OUT} component={SignOut} />
+            <Route path={SUCCESS_SIGN_UP} component={SuccessSignUp} />} />
             <Redirect from="" to={PRODUCTS} />
           </Switch>
         </BrowserRouter>

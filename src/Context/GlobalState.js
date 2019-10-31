@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
-import { db, getAllProducts, setAllProducts, updateProduct } from '../Firebase';
+import {
+  db,
+  auth,
+  getAllProducts,
+  setAllProducts,
+  updateProduct,
+  createUser
+} from '../Firebase';
 import ShopContext from './ShopContext';
 
 class GlobalState extends Component {
   state = {
     products: [],
     cart: [],
-    logged: false,
-    user: ''
+    logged: { status: false, user: '' }
   };
 
   componentDidMount() {
@@ -105,6 +111,21 @@ class GlobalState extends Component {
       }, 1000);
   };
 
+  register = (email, password) => {
+    return createUser(auth, email, password)
+      .then(response => {
+        console.log('success:', response);
+        return {
+          success: true,
+          text: 'User registered successfully'
+        };
+      })
+      .catch(error => {
+        console.log('error:', error.message);
+        return { success: false, text: error.message };
+      });
+  };
+
   logIn = () => {
     this.setState({ logged: true, user: 'Gonzalo' });
   };
@@ -120,10 +141,10 @@ class GlobalState extends Component {
           products: this.state.products,
           cart: this.state.cart,
           logged: this.state.logged,
-          user: this.state.user,
           addProductToCart: this.addProductToCart,
           deleteProductFromCart: this.deleteProductFromCart,
           buyCart: this.buyCart,
+          register: this.register,
           logIn: this.logIn,
           logOut: this.logOut
         }}

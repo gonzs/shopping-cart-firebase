@@ -50,7 +50,7 @@ const SignIn = props => {
         <Row>
           <Col xs={12} sm={12} md={2}>
             <Button variant="primary" type="button" onClick={handleSubmit}>
-              Sign-in
+              Login
             </Button>
           </Col>
           <Col xs={12} sm={12} md={3}>

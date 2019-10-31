@@ -1,7 +1,9 @@
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
+import 'firebase/auth';
 import { Products } from '../Config/data';
 import { firebaseConfig } from './firebaseConfig';
+import { func } from 'prop-types';
 
 /* Initialize Firebase */
 
@@ -9,6 +11,8 @@ const Firebase = firebase.initializeApp(firebaseConfig);
 
 /* Initialize DB */
 export const db = Firebase.firestore();
+/* Initialize auth */
+export const auth = Firebase.auth();
 
 /* Load products from data file */
 export const setAllProducts = db => {
@@ -61,4 +65,16 @@ export const getAllProducts = db => {
         .catch(error => console.error('Error getting documents', error))
     );
   });
+};
+
+/* Create User */
+export const createUser = (auth, email, password) => {
+  return auth
+    .createUserWithEmailAndPassword(email, password)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      throw error;
+    });
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -6,15 +6,19 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import { SIGN_IN } from '../Config/routes';
+import { SIGN_IN, SUCCESS_SIGN_UP } from '../Config/routes';
+import ShopContext from '../Context/ShopContext';
+import Alert from 'react-bootstrap/Alert';
+import { Redirect } from 'react-router-dom';
 
 const SignUp = props => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [message, setMessage] = useState('');
+  const context = useContext(ShopContext);
 
   const handleSubmit = () => {
-    alert('User registered successfully');
-    props.history.push(SIGN_IN);
+    context.register(email, password).then(res => setMessage(res));
   };
 
   return (
@@ -59,7 +63,7 @@ const SignUp = props => {
         <Row>
           <Col xs={12} sm={12} md={2}>
             <Button variant="primary" type="button" onClick={handleSubmit}>
-              Sign-Up
+              Register
             </Button>
           </Col>
           <Col xs={12} sm={12} md={3}>
@@ -68,6 +72,23 @@ const SignUp = props => {
           </Col>
         </Row>
       </Form>
+
+      <Row>
+        <Col xs={12} sm={12} md={6}>
+          {message.success !== undefined && !message.success ? (
+            <Alert variant="danger">{message.text}</Alert>
+          ) : message.success !== undefined && message.success ? (
+            <Redirect
+              to={{
+                pathname: SUCCESS_SIGN_UP,
+                state: { id: message.text }
+              }}
+            />
+          ) : (
+            <div></div>
+          )}
+        </Col>
+      </Row>
     </Container>
   );
 };
