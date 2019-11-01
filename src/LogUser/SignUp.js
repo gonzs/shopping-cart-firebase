@@ -14,11 +14,23 @@ import { Redirect } from 'react-router-dom';
 const SignUp = props => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState();
   const context = useContext(ShopContext);
 
   const handleSubmit = () => {
-    context.register(email, password).then(res => setMessage(res));
+    context
+      .register(email, password)
+      .then(response => {
+        console.log('success:', response);
+        setMessage({
+          success: true,
+          text: 'User registered successfully'
+        });
+      })
+      .catch(error => {
+        console.log('error:', error.message);
+        setMessage({ success: false, text: error.message });
+      });
   };
 
   return (
@@ -75,9 +87,9 @@ const SignUp = props => {
 
       <Row>
         <Col xs={12} sm={12} md={6}>
-          {message.success !== undefined && !message.success ? (
+          {message !== undefined && !message.success ? (
             <Alert variant="danger">{message.text}</Alert>
-          ) : message.success !== undefined && message.success ? (
+          ) : message !== undefined && message.success ? (
             <Redirect
               to={{
                 pathname: SUCCESS_SIGN_UP,

@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import {
   db,
   auth,
-  getAllProducts,
-  setAllProducts,
-  updateProduct,
+  getProducts,
+  createProducts,
+  updateProducts,
   createUser
 } from '../Firebase';
+import { Products } from '../Config/data';
 import ShopContext from './ShopContext';
 
 class GlobalState extends Component {
@@ -17,12 +18,19 @@ class GlobalState extends Component {
   };
 
   componentDidMount() {
-    /* Initial load of products */
-    // setAllProducts(db); /* Was executed before */
+    try {
+      /* Initial load of products to Firebase using Config/Data */
+      // createProducts(db, Products)
+      //   .then(() => console.log('Successful initial load of products'))
+      //   .catch(error => console.error(error));
 
-    getAllProducts(db).then(retrievedProducts =>
-      this.setState({ products: retrievedProducts })
-    );
+      /* Get Products from Firebase */
+      getProducts(db)
+        .then(retrievedProducts =>
+          this.setState({ products: retrievedProducts })
+        )
+        .catch(error => console.error(error));
+    } catch (error) {}
   }
 
   addProductToCart = product => {
@@ -100,30 +108,19 @@ class GlobalState extends Component {
     const cart = this.state.cart;
     const products = this.state.products;
 
-    if (cart.length !== 0)
-      setTimeout(() => {
-        products.forEach(item => {
-          updateProduct(db, item);
-        });
-
-        this.setState({ cart: [] });
-        alert('Cart Ordered!!!');
-      }, 1000);
+    if (cart.length !== 0) {
+      updateProducts(db, products)
+        .then(() => {
+          console.log('Successful items update');
+          this.setState({ cart: [] });
+          alert('Cart Ordered!!!');
+        })
+        .catch(error => console.error(`Any item was not updated`, error));
+    }
   };
 
   register = (email, password) => {
-    return createUser(auth, email, password)
-      .then(response => {
-        console.log('success:', response);
-        return {
-          success: true,
-          text: 'User registered successfully'
-        };
-      })
-      .catch(error => {
-        console.log('error:', error.message);
-        return { success: false, text: error.message };
-      });
+    return createUser(auth, email, password);
   };
 
   logIn = () => {
