@@ -8,15 +8,25 @@ import { withRouter } from 'react-router';
 import { PRODUCTS, SIGN_UP } from '../Config/routes';
 import { Link } from 'react-router-dom';
 import ShopContext from '../Context/ShopContext';
+import Alert from 'react-bootstrap/Alert';
 
 const SignIn = props => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [message, setMessage] = useState();
   const context = useContext(ShopContext);
 
   const handleSubmit = () => {
-    context.logIn();
-    props.history.push(PRODUCTS);
+    context
+      .logIn(email, password)
+      .then(response => {
+        context.updateUserStatus(response.user);
+        props.history.push(PRODUCTS);
+      })
+      .catch(error => {
+        console.log('error:', error.message);
+        setMessage({ success: false, text: error.message });
+      });
   };
 
   return (
@@ -59,6 +69,16 @@ const SignIn = props => {
           </Col>
         </Row>
       </Form>
+      <br />
+      <Row>
+        <Col xs={12} sm={12} md={6}>
+          {message !== undefined && !message.success ? (
+            <Alert variant="danger">{message.text}</Alert>
+          ) : (
+            <div></div>
+          )}
+        </Col>
+      </Row>
     </Container>
   );
 };

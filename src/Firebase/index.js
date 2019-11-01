@@ -82,3 +82,11 @@ export const getProducts = db => {
 export const createUser = (auth, email, password) => {
   return auth.createUserWithEmailAndPassword(email, password);
 };
+
+/* Create User */
+export const signInUser = (auth, email, password) => {
+  return auth.signInWithEmailAndPassword(email, password);
+};
+
+/* Create User */
+export const signOutUser = auth => auth.signOut();

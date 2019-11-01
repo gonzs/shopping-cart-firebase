@@ -5,11 +5,10 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { SIGN_IN, SUCCESS_SIGN_UP } from '../Config/routes';
 import ShopContext from '../Context/ShopContext';
 import Alert from 'react-bootstrap/Alert';
-import { Redirect } from 'react-router-dom';
 
 const SignUp = props => {
   const [email, setEmail] = useState();
@@ -84,7 +83,7 @@ const SignUp = props => {
           </Col>
         </Row>
       </Form>
-
+      <br />
       <Row>
         <Col xs={12} sm={12} md={6}>
           {message !== undefined && !message.success ? (

@@ -5,7 +5,9 @@ import {
   getProducts,
   createProducts,
   updateProducts,
-  createUser
+  createUser,
+  signInUser,
+  signOutUser
 } from '../Firebase';
 import { Products } from '../Config/data';
 import ShopContext from './ShopContext';
@@ -13,8 +15,7 @@ import ShopContext from './ShopContext';
 class GlobalState extends Component {
   state = {
     products: [],
-    cart: [],
-    logged: { status: false, user: '' }
+    cart: []
   };
 
   componentDidMount() {
@@ -29,7 +30,9 @@ class GlobalState extends Component {
         .then(retrievedProducts =>
           this.setState({ products: retrievedProducts })
         )
-        .catch(error => console.error(error));
+        .catch(error => console.log(error));
+
+      this.updateUserStatus();
     } catch (error) {}
   }
 
@@ -123,12 +126,20 @@ class GlobalState extends Component {
     return createUser(auth, email, password);
   };
 
-  logIn = () => {
-    this.setState({ logged: true, user: 'Gonzalo' });
+  logIn = (email, password) => {
+    return signInUser(auth, email, password);
   };
 
   logOut = () => {
-    this.setState({ logged: false, user: '' });
+    return signOutUser(auth);
+  };
+
+  updateUserStatus = (user = auth.currentUser) => {
+    if (user != null)
+      user.providerData.forEach(profile => {
+        this.setState({ user: { logged: true, name: profile.email } });
+      });
+    else this.setState({ user: { logged: false } });
   };
 
   render() {
@@ -137,13 +148,14 @@ class GlobalState extends Component {
         value={{
           products: this.state.products,
           cart: this.state.cart,
-          logged: this.state.logged,
+          user: this.state.user,
           addProductToCart: this.addProductToCart,
           deleteProductFromCart: this.deleteProductFromCart,
           buyCart: this.buyCart,
           register: this.register,
           logIn: this.logIn,
-          logOut: this.logOut
+          logOut: this.logOut,
+          updateUserStatus: this.updateUserStatus
         }}
       >
         {this.props.children}

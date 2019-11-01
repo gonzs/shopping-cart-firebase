@@ -11,15 +11,23 @@ const SignOut = props => {
   const handleButton = e => {
     if (e.target.id === 'no') props.history.push(PRODUCTS);
     else if (e.target.id === 'yes') {
-      context.logOut();
-      props.history.push(SIGN_IN);
+      context
+        .logOut()
+        .then(() => {
+          context.updateUserStatus();
+          props.history.push(SIGN_IN);
+        })
+        .catch(error => {
+          console.log('error:', error.message);
+          props.history.push(PRODUCTS);
+        });
     }
   };
 
   return (
     <Modal.Dialog>
       <Modal.Body>
-        <p>Sign-Out?</p>
+        <p>Logout?</p>
       </Modal.Body>
 
       <Modal.Footer>

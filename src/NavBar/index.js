@@ -13,16 +13,17 @@ class NavBar extends Component {
   static contextType = ShopContext;
 
   render() {
-    const { cart, logged } = this.context;
+    const { cart, user } = this.context;
 
-    const loggedComp = (
+    const noLoggedComp = () => (
       <Nav.Link as={Link} to={SIGN_IN}>
         Sign-in
       </Nav.Link>
     );
-    const noLoggedComp = (
+
+    const loggedComp = name => (
       <Nav.Link as={Link} to={SIGN_OUT}>
-        {logged.user}(Sign-out)
+        Sign-out({name})
       </Nav.Link>
     );
 
@@ -36,7 +37,9 @@ class NavBar extends Component {
           <Nav.Link as={Link} to={CHECKOUT}>
             Cart({cart.length})
           </Nav.Link>
-          {!logged.status ? loggedComp : noLoggedComp}
+          {user !== undefined && user.logged
+            ? loggedComp(user.name)
+            : noLoggedComp()}
         </Nav>
 
         <Form inline>
