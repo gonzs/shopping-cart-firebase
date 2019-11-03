@@ -1,5 +1,15 @@
 import React, { Component } from 'react';
-import { db, getAllProducts, setAllProducts, updateProduct } from '../Firebase';
+import {
+  db,
+  auth,
+  getProducts,
+  createProducts,
+  updateProducts,
+  createUser,
+  signInUser,
+  signOutUser
+} from '../Firebase';
+import { Products } from '../Config/data';
 import ShopContext from './ShopContext';
 
 class GlobalState extends Component {
@@ -9,12 +19,21 @@ class GlobalState extends Component {
   };
 
   componentDidMount() {
-    /* Initial load of products */
-    // setAllProducts(db); /* Was executed before */
+    try {
+      /* Initial load of products to Firebase using Config/Data */
+      // createProducts(db, Products)
+      //   .then(() => console.log('Successful initial load of products'))
+      //   .catch(error => console.error(error));
 
-    getAllProducts(db).then(retrievedProducts =>
-      this.setState({ products: retrievedProducts })
-    );
+      /* Get Products from Firebase */
+      getProducts(db)
+        .then(retrievedProducts =>
+          this.setState({ products: retrievedProducts })
+        )
+        .catch(error => console.log(error));
+
+      this.updateUserStatus();
+    } catch (error) {}
   }
 
   addProductToCart = product => {
@@ -92,15 +111,35 @@ class GlobalState extends Component {
     const cart = this.state.cart;
     const products = this.state.products;
 
-    if (cart.length !== 0)
-      setTimeout(() => {
-        products.forEach(item => {
-          updateProduct(db, item);
-        });
+    if (cart.length !== 0) {
+      updateProducts(db, products)
+        .then(() => {
+          console.log('Successful items update');
+          this.setState({ cart: [] });
+          alert('Cart Ordered!!!');
+        })
+        .catch(error => console.error(`Any item was not updated`, error));
+    }
+  };
 
-        this.setState({ cart: [] });
-        alert('Cart Ordered!!!');
-      }, 1000);
+  register = (email, password) => {
+    return createUser(auth, email, password);
+  };
+
+  logIn = (email, password) => {
+    return signInUser(auth, email, password);
+  };
+
+  logOut = () => {
+    return signOutUser(auth);
+  };
+
+  updateUserStatus = (user = auth.currentUser) => {
+    if (user != null)
+      user.providerData.forEach(profile => {
+        this.setState({ user: { logged: true, name: profile.email } });
+      });
+    else this.setState({ user: { logged: false } });
   };
 
   render() {
@@ -109,9 +148,14 @@ class GlobalState extends Component {
         value={{
           products: this.state.products,
           cart: this.state.cart,
+          user: this.state.user,
           addProductToCart: this.addProductToCart,
           deleteProductFromCart: this.deleteProductFromCart,
-          buyCart: this.buyCart
+          buyCart: this.buyCart,
+          register: this.register,
+          logIn: this.logIn,
+          logOut: this.logOut,
+          updateUserStatus: this.updateUserStatus
         }}
       >
         {this.props.children}
