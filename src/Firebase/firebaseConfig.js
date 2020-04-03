@@ -1,19 +1,9 @@
-import {
-  API_KEY,
-  AUTH_DOMAIN,
-  DATABASE_URL,
-  PROJECT_ID,
-  STORAGE_BUCKET,
-  MESSAGING_SENDER_ID,
-  APP_ID
-} from '../Config/config';
-
 export const firebaseConfig = {
-  apiKey: API_KEY,
-  authDomain: AUTH_DOMAIN,
-  databaseURL: DATABASE_URL,
-  projectId: PROJECT_ID,
-  storageBucket: STORAGE_BUCKET,
-  messagingSenderId: MESSAGING_SENDER_ID,
-  appId: APP_ID
+  apiKey: process.env.REACT_APP_APIKEY,
+  authDomain: process.env.REACT_APP_AUTHDOMAIN,
+  databaseURL: process.env.REACT_APP_DBURL,
+  projectId: process.env.REACT_APP_PROJID,
+  storageBucket: process.env.REACT_APP_STORAGEBUCKET,
+  messagingSenderId: process.env.REACT_APP_MSGSENDERID,
+  appId: process.env.REACT_APP_APPID,
 };

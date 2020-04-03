@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   db,
   auth,
   getProducts,
-  createProducts,
+  // createProducts,
   updateProducts,
   createUser,
   signInUser,
-  signOutUser
-} from '../Firebase';
-import { Products } from '../Config/data';
-import ShopContext from './ShopContext';
+  signOutUser,
+} from "../Firebase";
+// import { Products } from '../Config/data';
+import ShopContext from "./ShopContext";
 
 class GlobalState extends Component {
   state = {
     products: [],
-    cart: []
+    cart: [],
   };
 
   componentDidMount() {
@@ -27,27 +27,27 @@ class GlobalState extends Component {
 
       /* Get Products from Firebase */
       getProducts(db)
-        .then(retrievedProducts =>
+        .then((retrievedProducts) =>
           this.setState({ products: retrievedProducts })
         )
-        .catch(error => console.log(error));
+        .catch((error) => console.log(error));
 
       this.updateUserStatus();
     } catch (error) {}
   }
 
-  addProductToCart = product => {
+  addProductToCart = (product) => {
     setTimeout(() => {
       let newCart = [];
       let updatedProducts = [];
 
       /* Check Stock */
-      let indexProd = this.state.products.findIndex(prod => {
+      let indexProd = this.state.products.findIndex((prod) => {
         return prod.id === product.id;
       });
 
       if (this.state.products[indexProd].stock > 0) {
-        let indexCart = this.state.cart.findIndex(item => {
+        let indexCart = this.state.cart.findIndex((item) => {
           return item.id === product.id;
         });
 
@@ -60,9 +60,9 @@ class GlobalState extends Component {
                 id: product.id,
                 name: product.name,
                 quantity: 1,
-                totalValue: product.price
-              }
-            ])
+                totalValue: product.price,
+              },
+            ]),
           });
         } else {
           /* Existing item */
@@ -73,7 +73,7 @@ class GlobalState extends Component {
             newCart[indexCart].totalValue + product.price;
 
           this.setState({
-            cart: newCart
+            cart: newCart,
           });
         }
 
@@ -92,9 +92,9 @@ class GlobalState extends Component {
       let newCart = this.state.cart;
 
       /* Delete item */
-      this.setState({ cart: newCart.filter(item => item.id !== id) });
+      this.setState({ cart: newCart.filter((item) => item.id !== id) });
 
-      let indexProd = this.state.products.findIndex(prod => {
+      let indexProd = this.state.products.findIndex((prod) => {
         return prod.id === id;
       });
 
@@ -114,11 +114,11 @@ class GlobalState extends Component {
     if (cart.length !== 0) {
       updateProducts(db, products)
         .then(() => {
-          console.log('Successful items update');
+          console.log("Successful items update");
           this.setState({ cart: [] });
-          alert('Cart Ordered!!!');
+          alert("Cart Ordered!!!");
         })
-        .catch(error => console.error(`Any item was not updated`, error));
+        .catch((error) => console.error(`Any item was not updated`, error));
     }
   };
 
@@ -136,7 +136,7 @@ class GlobalState extends Component {
 
   updateUserStatus = (user = auth.currentUser) => {
     if (user != null)
-      user.providerData.forEach(profile => {
+      user.providerData.forEach((profile) => {
         this.setState({ user: { logged: true, name: profile.email } });
       });
     else this.setState({ user: { logged: false } });
@@ -155,7 +155,7 @@ class GlobalState extends Component {
           register: this.register,
           logIn: this.logIn,
           logOut: this.logOut,
-          updateUserStatus: this.updateUserStatus
+          updateUserStatus: this.updateUserStatus,
         }}
       >
         {this.props.children}

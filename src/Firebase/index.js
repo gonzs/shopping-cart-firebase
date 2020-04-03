@@ -1,11 +1,10 @@
-import * as firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
+import * as firebase from "firebase/app";
+import "firebase/firestore";
+import "firebase/auth";
 
-import { firebaseConfig } from './firebaseConfig';
+import { firebaseConfig } from "./firebaseConfig";
 
 /* Initialize Firebase */
-
 const Firebase = firebase.initializeApp(firebaseConfig);
 
 /* Initialize DB */
@@ -25,14 +24,11 @@ export const createProducts = (db, products) => {
 
 /* Create product */
 export const createProduct = (db, item) => {
-  return db
-    .collection('products')
-    .doc(item.id)
-    .set({
-      name: item.name,
-      price: item.price,
-      stock: item.stock
-    });
+  return db.collection("products").doc(item.id).set({
+    name: item.name,
+    price: item.price,
+    stock: item.stock,
+  });
 };
 
 /* Update products */
@@ -47,34 +43,31 @@ export const updateProducts = (db, products) => {
 
 /* Update product */
 export const updateProduct = (db, item) => {
-  return db
-    .collection('products')
-    .doc(item.id)
-    .update({
-      stock: item.stock
-    });
+  return db.collection("products").doc(item.id).update({
+    stock: item.stock,
+  });
 };
 
 /* Read All documents from Products Collection */
-export const getProducts = db => {
+export const getProducts = (db) => {
   return new Promise((resolve, reject) => {
-    db.collection('products')
+    db.collection("products")
       .get()
-      .then(querySnapshot => {
+      .then((querySnapshot) => {
         let products = [];
-        querySnapshot.forEach(doc => {
+        querySnapshot.forEach((doc) => {
           let prod = {
             id: doc.id,
             name: doc.data().name,
             price: doc.data().price,
-            stock: doc.data().stock
+            stock: doc.data().stock,
           };
 
           products.push(prod);
         });
         resolve(products);
       })
-      .catch(error => reject(error));
+      .catch((error) => reject(error));
   });
 };
 
@@ -89,4 +82,4 @@ export const signInUser = (auth, email, password) => {
 };
 
 /* Create User */
-export const signOutUser = auth => auth.signOut();
+export const signOutUser = (auth) => auth.signOut();

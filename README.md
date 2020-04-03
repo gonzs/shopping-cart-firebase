@@ -14,12 +14,14 @@ You can check the following documentation:<br>
 
 ## Initial Configuration
 
-It's necessary create Config/config file with the following constants. Info is provided by [firebase console](https://console.firebase.google.com).
+It's necessary create .env.local file with information provided by [firebase console](https://console.firebase.google.com).
 
-API_KEY = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'<br>
-AUTH_DOMAIN = 'xxxxxxxxxxxxxxxxxxxxxxxxxxx'<br>
-DATABASE_URL = 'xxxxxxxxxxxxxxxxxxxxxxxxx'<br>
-PROJECT_ID = 'xxxxxxxxxxxxxxxxxx'<br>
-STORAGE_BUCKET = 'xxxxxxxxxxxxxxxxx'<br>
-MESSAGING_SENDER_ID = 'xxxxxxxxxxxxxxxxxxxx'<br>
-APP_ID = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'<br>
+```
+REACT_APP_APIKEY =
+REACT_APP_AUTHDOMAIN =
+REACT_APP_DBURL =
+REACT_APP_PROJID =
+REACT_APP_STORAGEBUCKET =
+REACT_APP_MSGSENDERID =
+REACT_APP_APPID =
+```
